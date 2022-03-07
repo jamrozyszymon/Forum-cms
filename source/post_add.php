@@ -1,18 +1,16 @@
 <?php
-if(isset($_POST['title']))
-{
-$sql = "INSERT INTO posts (id, title, body, topic_id) VALUES(null, :title, :body,:topic_id)";
-$stmt=$db_connect->prepare($sql);
-$stmt->bindParam(':title', $_POST['title']);
-$stmt->bindParam(':body', $_POST['body']);
-$stmt->bindParam(':topic_id', $_POST['topic_id']);
-$stmt->execute();
-}
-else
-{
+if((isset($_POST['submit'])) && (empty($_POST['title']))) {
     echo 'Wprowadź tytuł postu';
-}
-//select menu of topic
+} elseif (isset($_POST['submit'])) {
+    $sql = "INSERT INTO posts (id, title, body, topic_id) VALUES(null, :title, :body,:topic_id)";
+    $stmt=$db_connect->prepare($sql);
+    $stmt->bindParam(':title', $_POST['title']);
+    $stmt->bindParam(':body', $_POST['body']);
+    $stmt->bindParam(':topic_id', $_POST['topic_id']);
+    $stmt->execute();
+    header('location:index.php?q=posts');
+} 
+//select list of topic
 $sql2="SELECT name, id FROM topic";
 $stmt2=$db_connect->prepare($sql2);
 $stmt2->execute();
@@ -28,23 +26,21 @@ $result=$stmt2->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class="input-group mb-3">
     <span class="input-group-text">Treść</span>
-    <textarea class="form-control" name="body" placeholder="Treśc posta" aria-label="Body post"></textarea>
+    <textarea class="form-control" name="body" placeholder="Treść postu" aria-label="Body post"></textarea>
     </div>
     <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">Temat</span>
     <select name='topic_id' class="custom-select" id="inputGroupSelect01">
-        <option selected>Wybierz odpowiedni temat dla posta</option>
-        <?php
-        foreach($result as $results)
-        {
-        ?>
-            <option value= <?php echo $results['id']; ?> > <?php echo $results['name']; ?></option>
+        <option selected>Wybierz odpowiedni temat dla postu</option>
+            <?php
+            foreach($result as $results){
+                ?>
+                    <option value= <?php echo $results['id']; ?> > <?php echo $results['name']; ?></option>
 
-        <?php    
-        }
-        ?>
-
+                <?php    
+            }
+            ?>
     </select>
     </div>
-    <input type="submit" value="Dodaj post">
+    <button type="submit" name="submit" class="btn btn-primary">Dodaj post</button>
 </form>

@@ -1,16 +1,15 @@
 <?php
-//adding topic - query
-if(isset($_POST['add_topic']))
-{
+
+if((isset($_POST['submit'])) && (empty($_POST['add_topic']))) {
+    echo "wprowadź nazwę";
+} elseif (isset($_POST['submit'])) {
     $sql='INSERT INTO topic (id,name) VALUES(null,:add_topic)';
     $stmt=$db_connect->prepare($sql);
     $stmt->bindParam(':add_topic', $_POST['add_topic']);
     $stmt->execute();
-
-    header('location: index.php?q=topic');
+    header ('location:index.php?v=topic');
 }
-
-//adding topic - query
+    
 $sql2= 'SELECT id, name from topic';
 $stmt2=$db_connect->prepare($sql2);
 $stmt2->execute();
@@ -28,7 +27,7 @@ $stmt2->execute();
     </div>
     </br>
     <div class = "form-group">
-        <button class ="btn btn-primary btn-lg">Dodaj</button>
+        <button type="submitt" name="submit" class ="btn btn-primary btn-lg">Dodaj</button>
     </div>
 </form>
 </br>
@@ -40,24 +39,22 @@ $stmt2->execute();
     <thead>
         <tr>
             <th scope = "col">ID DataBase</th>
-            <th scope = "col">Name</th>
+            <th scope = "col">Nazwa</th>
         </tr>
     </thead>
     <tbody>
     <?php 
-    foreach($stmt2 as $topics)
-    {
-    ?>
-        <tr>
-            <td> <?php echo $topics['id'];?> </td>
-            <td> <?php echo $topics['name'];?> </td>
-        </tr>
-    <?php
+    foreach($stmt2 as $topics) {
+        ?>
+            <tr>
+                <td> <?php echo $topics['id'];?> </td>
+                <td> <?php echo $topics['name'];?> </td>
+            </tr>
+        <?php
     }
     ?>
     </tbody>
 </table>
-
 
 
 

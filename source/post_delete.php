@@ -20,10 +20,12 @@ if(isset($_GET['id'])) {
 
 
 ?>
-<h1>Usuń Temat</h1>
-Czy na pewno usunąć post:
-</br> <?php echo $result['title'];?> (ID postu: <?php echo $_GET['id'];?> ).
+<h1>Usuń Post</h1>
+</br>
+Czy na pewno usunąć post: <?php echo $result['title'];?> (ID postu: <?php echo $_GET['id'];?> ).
+</br>
 </br>
 <form method="post">
-<input type="submit" name="submit" value="Usun">
+    <button class="btn btn-danger" name="submit">Usuń</button>
+    <a href= "index.php?q=posts"><button type="button" class="btn btn-secondary">Anuluj</button></a>
 </form>

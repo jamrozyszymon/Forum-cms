@@ -38,33 +38,52 @@ if(!isset($_GET['id'])) {
     ?>
 
     <h1>Edytuj Post</h1>
-    <div>
-        Obecny tytuł postu
-        </br>
-        <?php echo $result['title']; ?>
-    </div>
-    <div>
-        <form method="POST">
-            <div class="input-group mb-3">
-            <!--<span class="input-group-text" id="basic-addon1">Temat</span>-->
-            <input type="text" class="form-control" name="update_title" placeholder="Nowa tytuł tematu" aria-label="Update title" aria-describedby="basic-addon1">
-    </div>
-    <div>
-    Obecna treść postu
     </br>
-    <?php echo $result['body']; ?>
+    <!--title-->
+    <form method="POST">
+    <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Obecny tytuł postu</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php 
+                if(!empty($result['title'])){
+                    echo $result['title'];
+                } else {
+                        echo 'Post nie posiada tytułu.';
+                    }
+                ?>">
+            </div>
     </div>
-    <div>
-        <form method="POST">
-            <div class="input-group mb-3">
-            <!--<span class="input-group-text" id="basic-addon1">Temat</span>-->
-            <input type="text" class="form-control" name="update_body" placeholder="Nowa treść postu" aria-label="Update body" aria-describedby="basic-addon1">
+    <div class="mb-3 row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Nowy tytuł postu</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword" placeholder="Wprowadź tytuł" name="update_title">
+            </div>
+    </div>
+    </br>
+    <!--body-->
+    <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Obecna treść postu</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php 
+                if(!empty($result['body'])){
+                    echo $result['body'];
+                } else {
+                    echo 'Post nie posiada treści.';
+                }
+                ?>">
+            </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Nowa treść postu</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword" placeholder="Wprowadź treść" name="update_body">
+            </div>
     </div>
     </br>
     <div class = "form-group">
-        <button class ="btn btn-success btn-lg">Edytuj</button>
+        <button class ="btn btn-success">Edytuj</button>
+        <a href="index.php?q=posts"><button class="btn btn-secondary">Anuluj</button></a>
     </div>
     </form>
-    </div>
-    <?php 
+<?php 
 }
